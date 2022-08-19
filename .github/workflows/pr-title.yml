@@ -1,0 +1,21 @@
+name: Adjust PR Title
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo, number: pull_number } = context.issue;
+
+            await github.rest.pulls.update({
+              owner,
+              repo,
+              pull_number,
+              title: 'new title',
+            });
